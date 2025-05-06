@@ -16,10 +16,8 @@ func InitBot() {
 		BotAppid = ProdBotAppid
 		BotSecret = ProdBotSecret
 	} else {
-		//BotAppid = TestBotAppid
-		//BotSecret = TestBotSecret
-		BotAppid = ProdBotAppid
-		BotSecret = ProdBotSecret
+		BotAppid = TestBotAppid
+		BotSecret = TestBotSecret
 	}
 	fmt.Printf("BotAppid: %v\n", BotAppid)
 	ImClient = lark.NewClient(BotAppid, BotSecret)
