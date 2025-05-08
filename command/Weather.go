@@ -27,5 +27,5 @@ func (c *WeatherCommand) Execute(args []string) (body string, msgtype string) {
 	if len(args) > 1 {
 		city = args[1]
 	}
-	return fmt.Sprintf(`{"text":"%s今日晴，气温15-25℃""}`, city), "text"
+	return fmt.Sprintf(`{"text":"%s今日晴，气温15-25℃"}`, city), "text"
 }

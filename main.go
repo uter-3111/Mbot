@@ -9,6 +9,8 @@ import (
 	larkws "github.com/larksuite/oapi-sdk-go/v3/ws"
 	"mbot/im"
 	"mbot/infra"
+	"os"
+	"strings"
 )
 
 func main() {
@@ -21,13 +23,19 @@ func main() {
 			return nil
 		})
 	// 创建Client
+	if strings.Contains(os.Getenv("HOSTNAME"), "mbot") {
+		infra.Loglevel = larkcore.LogLevelError
+	} else {
+		infra.Loglevel = larkcore.LogLevelDebug
+	}
+	fmt.Printf("LogLeve:%v \n", infra.Loglevel)
 	cli := larkws.NewClient(infra.BotAppid, infra.BotSecret,
 		larkws.WithEventHandler(eventHandler),
-		larkws.WithLogLevel(larkcore.LogLevelWarn),
+		larkws.WithLogLevel(infra.Loglevel),
 	)
 
 	// 启动客户端
-	fmt.Println("server start...")
+	fmt.Println("McDonald's start success")
 	err := cli.Start(context.Background())
 	if err != nil {
 		panic(err)

@@ -2,6 +2,7 @@ package ZTAPI
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -28,4 +29,10 @@ func TestGetInfo(t *testing.T) {
 
 	fmt.Println(info, info.StockInfo)
 
+}
+
+func TestConvertToKV(t *testing.T) {
+	a := "001.SH"
+	b := strings.Split(a, ".")
+	fmt.Println(b)
 }

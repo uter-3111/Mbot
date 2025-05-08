@@ -30,9 +30,12 @@ func NewStockCommand() *StockCommand {
 
 func (c *StockCommand) Execute(args []string) (body string, msgtype string) {
 	// args:[stock 002201]
+	if len(args) < 2 {
+		return fmt.Sprintf(`{"text":"需要指明代码：例如:stock 中国平安或stock 601318"}`), "text"
+	}
 	IsStock, name, code := IsStock(args[1])
 	if !IsStock {
-		return fmt.Sprintf(`{"text":"此代码不存在,请确认！"}`), "text"
+		return fmt.Sprintf(`{"text":"此代码不存在,你可以试试601318/中国平安"}`), "text"
 	}
 	stockInfo, err := ZTAPI.Quert_stock_info(name, code)
 	if err != nil {

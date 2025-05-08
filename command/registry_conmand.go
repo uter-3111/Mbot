@@ -42,6 +42,9 @@ func (cr *CommandRegistry) ParseAndExecute(input string) (body string, msgtype s
 func (cr *CommandRegistry) ListCommands() []string {
 	var cmds []string
 	for name := range cr.commands {
+		if name == "stock" {
+			continue
+		}
 		cmds = append(cmds, "/"+name)
 	}
 	return cmds

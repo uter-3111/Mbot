@@ -12,8 +12,11 @@ import (
 )
 
 func ReplyByCommand(ctx context.Context, event *larkim.P2MessageReceiveV1) error {
-	fmt.Printf("[ OnP2MessageReceiveV1 access ], data: %s\n", larkcore.Prettify(event.Event))
-	fmt.Printf("[ OnP2MessageReceiveV1 access ], event MessageID: %s\n", larkcore.Prettify(event.Event.Message.MessageId))
+	if infra.Loglevel < 2 {
+		fmt.Printf("[ OnP2MessageReceiveV1 access ], data: %s\n", larkcore.Prettify(event.Event))
+		fmt.Printf("[ OnP2MessageReceiveV1 access ], event MessageID: %s\n", larkcore.Prettify(event.Event.Message.MessageId))
+
+	}
 	messageId := *event.Event.Message.MessageId
 	content, err := GetTextContent(*event.Event.Message.Content)
 	if err != nil {
@@ -50,8 +53,10 @@ func ReplyMessageCallBack(messageId string, body string, msgtype string) {
 		return
 	}
 
-	// 业务处理
-	fmt.Println(larkcore.Prettify(resp))
+	// 业务处理 这里会打印lark msg的req和resp
+	if infra.Loglevel < 2 {
+		fmt.Println(larkcore.Prettify(resp))
+	}
 }
 
 type Message struct {

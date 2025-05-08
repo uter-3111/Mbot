@@ -15,10 +15,10 @@ cd "$(dirname "$0")"
 
 # 执行编译命令
 go build -o $OUTPUT_FILE main.go
-
+zip -r Mbot.zip Mbot
 # 检查编译是否成功
 if [ $? -eq 0 ]; then
-    echo "编译成功！生成的可执行文件名为: $OUTPUT_FILE"
+    echo "编译成功！生成的文件名为: $OUTPUT_FILE zip"
 else
     echo "编译失败，请检查代码或 Go 环境配置。"
 fi

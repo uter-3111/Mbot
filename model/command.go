@@ -18,15 +18,15 @@ type Stock struct {
 	Bourse string `json:"jys"` // 交易所
 }
 type StockInfo struct {
-	LastPrice float32 `json:"lastPrice"` // 最新价格
-	Open      float32 `json:"open"`      // 开盘价
-	High      float32 `json:"high"`      // 最高价
-	Low       float32 `json:"low"`       // 最低价
-	LastClose float32 `json:"lastClose"` // 昨日收盘价
-	Amount    int     `json:"amount"`    // 成交总额
-	Volume    int     `json:"volume"`    // 成交量
-	Pvolume   int     `json:"pvolume"`   // 原始成交总量
-	T         string  `json:"t"`         // 更新时间
+	LastPrice float32 `json:"p"`       // 最新价格
+	Open      float32 `json:"o"`       // 开盘价
+	High      float32 `json:"h"`       // 最高价
+	Low       float32 `json:"l"`       // 最低价
+	LastClose float32 `json:"yc"`      // 昨日收盘价
+	Amount    int     `json:"amount"`  // 成交总额
+	Volume    int     `json:"volume"`  // 成交量
+	Pvolume   int     `json:"pvolume"` // 原始成交总量
+	T         string  `json:"t"`       // 更新时间
 }
 
 type Stockfluctuation struct {

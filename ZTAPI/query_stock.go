@@ -8,6 +8,7 @@ import (
 	"mbot/model"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var StockList []model.Stock
@@ -61,8 +62,12 @@ func Query_all_stock() error {
 // 转换为 map[stock代码]stock名称
 func ConvertToKV(stocks []model.Stock) {
 	for _, s := range stocks {
-		StockMapNameToCode[s.Name] = s.Code // 以代名称键，代码为值
-		StockMapCodeToName[s.Code] = s.Name // 以代码为键，名称为值
+		StockMapNameToCode[s.Name] = s.Code
+		if len(strings.Split(s.Code, ".")) > 1 {
+			StockMapCodeToName[strings.Split(s.Code, ".")[0]] = s.Name // 以代码为键，名称为值
+		} else {
+			StockMapCodeToName[s.Code] = s.Name // 以代码为键，名称为值
+		}
 	}
 }
 
