@@ -16,10 +16,7 @@ func (c *StockCommand) GetName() string {
 }
 
 func NewStockCommand() *StockCommand {
-	err := ZTAPI.Query_all_stock()
-	if err != nil {
-		fmt.Println("stock command err:%s", err)
-	}
+	_ = ZTAPI.Query_all_stock()
 	return &StockCommand{
 		BaseCommand: &model.BaseCommand{
 			Name:        "stock",
@@ -39,7 +36,8 @@ func (c *StockCommand) Execute(args []string) (body string, msgtype string) {
 	}
 	stockInfo, err := ZTAPI.Quert_stock_info(name, code)
 	if err != nil {
-		return fmt.Sprintf(`{"text":"遇到错误: %s"}`, err), "text"
+		body := fmt.Sprintf(`{"text":"Get stock info https err, Please check https request"}`)
+		return body, "text"
 	}
 	stock.AnalyRate(stockInfo)
 	color := "red"

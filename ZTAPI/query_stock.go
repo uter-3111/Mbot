@@ -40,7 +40,16 @@ func Quert_stock_info(name string, code string) (stock *model.Stockfluctuation, 
 }
 
 // 查询所有stock
-func Query_all_stock() error {
+func Query_all_stock() (err error) {
+	defer func() {
+		if err != nil {
+			fmt.Printf("Stock command err :%s", err)
+			// 如果从接口获取数据失败,那就临时使用文件中提前存储好的
+			_ = json.Unmarshal([]byte(infra.Stock_all), &StockList)
+			fmt.Println("Get stock list success for local")
+		}
+		ConvertToKV(StockList)
+	}()
 	url := fmt.Sprintf("https://api.zhituapi.com/hs/list/all?token=%v", infra.ZTAPIToken)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -55,17 +64,17 @@ func Query_all_stock() error {
 	if err != nil {
 		return err
 	}
-	ConvertToKV(StockList)
 	return nil
 }
 
 // 转换为 map[stock代码]stock名称
 func ConvertToKV(stocks []model.Stock) {
 	for _, s := range stocks {
-		StockMapNameToCode[s.Name] = s.Code
 		if len(strings.Split(s.Code, ".")) > 1 {
 			StockMapCodeToName[strings.Split(s.Code, ".")[0]] = s.Name // 以代码为键，名称为值
+			StockMapNameToCode[s.Name] = strings.Split(s.Code, ".")[0]
 		} else {
+			StockMapNameToCode[s.Name] = s.Code
 			StockMapCodeToName[s.Code] = s.Name // 以代码为键，名称为值
 		}
 	}
